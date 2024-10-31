@@ -13,9 +13,9 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-To use Shigeki, first create a Shigeki instance by passing in the Stimulus controller name.
+To use Shigeki, first create a Shigeki instance by passing in the Stimulus controller name along with the view context (if needed, nil by default).
 ```ruby
-- counter_stimulus = Shigeki.new('shigeki--example--counter')
+- counter_stimulus = Shigeki.new('shigeki--example--counter', view_context: self)
 ```
 
 Then, you can use this instance inside your `data` hash to set Stimulus attributes
