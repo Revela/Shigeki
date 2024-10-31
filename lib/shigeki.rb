@@ -1,12 +1,13 @@
 class Shigeki
-  attr_accessor :controller_name
+  attr_accessor :controller_name, :view_context
 
-  def initialize(controller_name)
+  def initialize(controller_name, view_context)
     @controller_name = controller_name
+    @view_context = view_context
   end
 
   def data(&)
-    builder = Builder.new(controller_name)
+    builder = Builder.new(controller_name, view_context)
 
     builder.instance_eval(&)
 
@@ -14,11 +15,16 @@ class Shigeki
   end
 
   class Builder
-    attr_accessor :controller_name
+    attr_accessor :controller_name, :view_context
 
-    def initialize(controller_name)
+    def initialize(controller_name, view_context)
       @controller_name = controller_name
       @data = {}
+      @view_context = view_context
+    end
+
+    def method_missing(method, *args, **kwargs, &block)
+      view_context.send(method, *args, **kwargs, &block) if view_context.respond_to?(method)
     end
 
     def to_h
