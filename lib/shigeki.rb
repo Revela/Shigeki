@@ -24,7 +24,7 @@ class Shigeki
     end
 
     def method_missing(method, *args, **kwargs, &block)
-      view_context.send(method, *args, **kwargs, &block) if view_context&.respond_to?(method)
+      view_context.send(method, *args, **kwargs, &block) if view_context&.respond_to?(method, true)
     end
 
     def to_h
